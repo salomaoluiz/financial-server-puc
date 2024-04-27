@@ -1,20 +1,34 @@
 package com.salomao_neto.financial_server.infra.user
 
-import com.salomao_neto.financial_server.application.user.use_case.NewUserInput
 import com.salomao_neto.financial_server.domain.user.UserEntity
 import com.salomao_neto.financial_server.application.user.repository.UserRepository
+import com.salomao_neto.financial_server.infra.user.database.User
+import com.salomao_neto.financial_server.infra.user.database.UserDatabase
+import com.salomao_neto.financial_server.presentation.user.request.NewUserInput
 import org.springframework.stereotype.Component
 import java.util.*
 
 @Component
-class UserRepositoryImp : UserRepository {
+class UserRepositoryImp(private val userDatabase: UserDatabase) : UserRepository {
 
-    override fun save(user: NewUserInput): UserEntity {
-        val id = UUID.randomUUID();
-        val name = user.name;
-        val email = user.email;
-        val password = user.password;
+    override fun save(newUser: NewUserInput): UserEntity {
 
-        return UserEntity(id, email, password, name)
+        val user = User(name = newUser.name, password = newUser.password, email = newUser.email)
+
+        userDatabase.save(user)
+
+        return UserEntity(id = user.id, email = user.email, name = user.name)
+    }
+
+    override fun findUserById(uuid: UUID): UserEntity? {
+        val userEntity = userDatabase.findById(uuid);
+
+        if (userEntity.isEmpty) {
+            return null;
+        }
+
+        val user = userEntity.get()
+
+        return UserEntity(id = user.id, email = user.email, name = user.name)
     }
 }
