@@ -5,5 +5,5 @@ interface UseCaseWithInput<I, R> {
 }
 
 interface UseCaseWithoutInput<R> {
-    fun run(): R;
+    fun run(): R
 }

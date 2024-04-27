@@ -9,6 +9,6 @@ import java.util.UUID
 @Service
 class GetUserByIdUseCase(private val userRepository: UserRepository) : UseCaseWithInput<UUID, UserEntity?> {
     override fun run(input: UUID): UserEntity? {
-        return userRepository.findUserById(input);
+        return userRepository.findUserById(input)
     }
 }

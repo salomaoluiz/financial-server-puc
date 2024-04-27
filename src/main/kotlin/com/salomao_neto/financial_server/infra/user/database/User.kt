@@ -21,4 +21,4 @@ class User(
 
     @NotNull
     var password: String
-) {}
+)

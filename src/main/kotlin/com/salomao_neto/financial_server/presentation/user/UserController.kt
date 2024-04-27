@@ -21,11 +21,11 @@ class UserController(
 
     @PostMapping()
     fun save(@RequestBody @Valid input: NewUserInput): UserEntity {
-        return createNewUserUseCase.run(input);
+        return createNewUserUseCase.run(input)
     }
 
     @GetMapping()
     fun findUserById(@Valid uuid: UUID): UserEntity? {
-        return getUserByIdUseCase.run(uuid);
+        return getUserByIdUseCase.run(uuid)
     }
 }

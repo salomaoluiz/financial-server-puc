@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service
 class CreateNewUserUseCase(private val userRepository: UserRepository) : UseCaseWithInput<NewUserInput, UserEntity> {
 
     override fun run(input: NewUserInput): UserEntity {
-        val user = this.userRepository.save(input);
+        val user = this.userRepository.save(input)
 
-        return user;
+        return user
     }
 
 }

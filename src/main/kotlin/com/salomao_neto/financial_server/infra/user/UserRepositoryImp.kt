@@ -21,10 +21,10 @@ class UserRepositoryImp(private val userDatabase: UserDatabase) : UserRepository
     }
 
     override fun findUserById(uuid: UUID): UserEntity? {
-        val userEntity = userDatabase.findById(uuid);
+        val userEntity = userDatabase.findById(uuid)
 
         if (userEntity.isEmpty) {
-            return null;
+            return null
         }
 
         val user = userEntity.get()

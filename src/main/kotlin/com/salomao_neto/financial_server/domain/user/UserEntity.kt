@@ -6,4 +6,4 @@ data class UserEntity(
     var id: UUID? = null,
     var email: String? = "",
     var name: String? = ""
-) {}
+)

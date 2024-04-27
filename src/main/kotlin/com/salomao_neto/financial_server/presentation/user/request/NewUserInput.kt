@@ -10,6 +10,4 @@ data class NewUserInput(
     @field:NotBlank
     val password: String,
     @field:NotBlank
-    val name: String) {
-
-}
+    val name: String)
