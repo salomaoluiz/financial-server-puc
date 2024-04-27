@@ -1,8 +1,10 @@
 package com.salomao_neto.financial_server.application.user.repository
 
-import com.salomao_neto.financial_server.application.user.use_case.NewUserInput
 import com.salomao_neto.financial_server.domain.user.UserEntity
+import com.salomao_neto.financial_server.presentation.user.request.NewUserInput
+import java.util.UUID
 
 interface UserRepository {
-    fun save(user: NewUserInput): UserEntity;
+    fun save(newUser: NewUserInput): UserEntity;
+    fun findUserById(uuid: UUID): UserEntity?;
 }
