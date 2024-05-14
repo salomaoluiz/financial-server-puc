@@ -1,9 +1,9 @@
-package com.salomao_neto.financial_server.presentation.user.request
+package com.salomao_neto.financial_server.presentation.auth.request
 
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
 
-data class NewUserInput(
+data class RegisterNewUserInput(
     @field:Email
     @field:NotBlank
     val email: String,
