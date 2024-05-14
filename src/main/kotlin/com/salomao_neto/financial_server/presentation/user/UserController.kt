@@ -4,6 +4,7 @@ import com.salomao_neto.financial_server.application.user.use_case.CreateNewUser
 import com.salomao_neto.financial_server.application.user.use_case.GetUserByIdUseCase
 import com.salomao_neto.financial_server.domain.user.UserEntity
 import com.salomao_neto.financial_server.presentation.user.request.NewUserInput
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -14,6 +15,7 @@ import java.util.UUID
 
 @RestController
 @RequestMapping("/user")
+@SecurityRequirement(name = "AuthService")
 class UserController(
     val createNewUserUseCase: CreateNewUserUseCase,
     val getUserByIdUseCase: GetUserByIdUseCase
