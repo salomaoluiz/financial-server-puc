@@ -7,6 +7,5 @@ data class UserToken(
     val id: UUID,
     val name: String
 ) {
-    constructor() : this(UUID.randomUUID(), "")
-    constructor(user: UserEntity) : this(id = user.id!!, name = user.name!!);
+    constructor(user: UserEntity) : this(id = user.id!!, name = user.name!!)
 }

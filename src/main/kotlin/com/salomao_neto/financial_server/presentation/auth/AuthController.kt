@@ -25,7 +25,7 @@ class AuthController(
 
     @PostMapping("/login-with-email")
     fun loginWithEmail(@RequestBody @Valid input: LoginWithEmailInput): ResponseEntity<AuthEntity> {
-        val useCaseInput = LoginWithEmailUseCaseInput(email = input.email, password = input.password);
+        val useCaseInput = LoginWithEmailUseCaseInput(email = input.email, password = input.password)
         loginWithEmailUseCase.run(useCaseInput).let {
             if (it == null) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()

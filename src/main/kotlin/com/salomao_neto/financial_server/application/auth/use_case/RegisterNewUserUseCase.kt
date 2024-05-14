@@ -16,12 +16,12 @@ class RegisterNewUserUseCase(
     UseCaseWithInput<RegisterNewUserUseCaseInput, AuthEntity> {
 
     override fun run(input: RegisterNewUserUseCaseInput): AuthEntity {
-        val user = this.userRepository.registerUser(input)
+        this.userRepository.registerUser(input)
 
         val loginWithEmailInput = LoginWithEmailUseCaseInput(email = input.email, password = input.password)
         val auth = loginWithEmailUseCase.run(loginWithEmailInput)
 
-        return auth!!;
+        return auth!!
     }
 
 }

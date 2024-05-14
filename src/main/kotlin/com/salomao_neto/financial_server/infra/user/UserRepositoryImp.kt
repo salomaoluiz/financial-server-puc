@@ -5,7 +5,6 @@ import com.salomao_neto.financial_server.domain.user.UserEntity
 import com.salomao_neto.financial_server.application.user.repository.UserRepository
 import com.salomao_neto.financial_server.infra.user.database.User
 import com.salomao_neto.financial_server.infra.user.database.UserDatabase
-import com.salomao_neto.financial_server.presentation.auth.request.RegisterNewUserInput
 import org.springframework.stereotype.Component
 import java.util.*
 
