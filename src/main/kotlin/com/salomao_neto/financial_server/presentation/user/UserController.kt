@@ -1,6 +1,6 @@
 package com.salomao_neto.financial_server.presentation.user
 
-import com.salomao_neto.financial_server.application.user.use_case.GetUserByIdUseCase
+import com.salomao_neto.financial_server.application.user.use_case.GetUserUseCase
 import com.salomao_neto.financial_server.domain.user.UserEntity
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import jakarta.validation.Valid
@@ -13,11 +13,11 @@ import java.util.UUID
 @RequestMapping("/user")
 @SecurityRequirement(name = "AuthService")
 class UserController(
-    val getUserByIdUseCase: GetUserByIdUseCase
+    val getUserUseCase: GetUserUseCase
 ) {
 
     @GetMapping()
-    fun findUserById(@Valid uuid: UUID): UserEntity? {
-        return getUserByIdUseCase.run(uuid)
+    fun getUser(): UserEntity? {
+        return getUserUseCase.run()
     }
 }
