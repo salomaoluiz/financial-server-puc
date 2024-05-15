@@ -6,6 +6,7 @@ import com.salomao_neto.financial_server.domain.financial.TransactionEntity
 import com.salomao_neto.financial_server.presentation.financial.request.CreateTransactionInput
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import jakarta.validation.Valid
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/financial/transaction")
 @SecurityRequirement(name = "AuthService")
 class TransactionController(
+    val getTransactionsUseCase: GetTransactionsUseCase,
     val createTransactionUseCase: CreateTransactionUseCase,
 ) {
 
@@ -31,4 +33,8 @@ class TransactionController(
         return createTransactionUseCase.run(useCaseInput)
     }
 
+    @GetMapping()
+    fun getTransactions(): List<TransactionEntity> {
+        return getTransactionsUseCase.run()
+    }
 }
