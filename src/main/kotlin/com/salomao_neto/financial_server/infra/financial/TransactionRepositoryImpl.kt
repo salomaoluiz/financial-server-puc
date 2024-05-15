@@ -47,13 +47,24 @@ class TransactionRepositoryImpl(
         TODO("Not yet implemented")
     }
 
-    override fun getTransactions(id: UUID): Array<TransactionEntity> {
-        TODO("Not yet implemented")
+    override fun getTransactions(id: UUID): List<TransactionEntity> {
+        val transactions = transactionDatabase.findByUserId(id)
+
+        return transactions.map {
+            TransactionEntity(
+                id = it.id,
+                description = it.description,
+                date = it.date,
+                value = it.value,
+                category = it.category
+            )
+        }
     }
 
     override fun editTransaction(id: UUID, input: EditTransactionUseCaseInput): TransactionEntity {
         TODO("Not yet implemented")
     }
+
     override fun deleteTransactionById(id: UUID): Boolean {
         TODO("Not yet implemented")
     }

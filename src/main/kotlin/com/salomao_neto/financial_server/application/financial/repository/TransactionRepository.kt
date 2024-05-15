@@ -10,7 +10,7 @@ interface TransactionRepository {
 
     fun getTransactionById(id: UUID): TransactionEntity
 
-    fun getTransactions(id: UUID): Array<TransactionEntity>
+    fun getTransactions(id: UUID): List<TransactionEntity>
 
     fun editTransaction(id: UUID, input: EditTransactionUseCaseInput): TransactionEntity
 
