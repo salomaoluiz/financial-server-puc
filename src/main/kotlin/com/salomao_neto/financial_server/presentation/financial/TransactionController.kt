@@ -7,10 +7,12 @@ import com.salomao_neto.financial_server.presentation.financial.request.CreateTr
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.util.UUID
 
 
 @RestController
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController
 class TransactionController(
     val getTransactionsUseCase: GetTransactionsUseCase,
     val createTransactionUseCase: CreateTransactionUseCase,
+    val getTransactionByIdUseCase: GetTransactionByIdUseCase
 ) {
 
     @PostMapping
@@ -36,5 +39,10 @@ class TransactionController(
     @GetMapping()
     fun getTransactions(): List<TransactionEntity> {
         return getTransactionsUseCase.run()
+    }
+
+    @GetMapping("/{id}")
+    fun getTransactionById(@PathVariable id: UUID): TransactionEntity {
+        return getTransactionByIdUseCase.run(id);
     }
 }

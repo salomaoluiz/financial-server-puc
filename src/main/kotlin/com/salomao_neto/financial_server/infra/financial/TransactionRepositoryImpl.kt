@@ -7,6 +7,7 @@ import com.salomao_neto.financial_server.domain.financial.TransactionEntity
 import com.salomao_neto.financial_server.infra.financial.database.Transaction
 import com.salomao_neto.financial_server.infra.financial.database.TransactionDatabase
 import com.salomao_neto.financial_server.infra.user.database.UserDatabase
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
 import org.springframework.stereotype.Component
 import java.lang.Exception
 import java.util.*
@@ -17,6 +18,17 @@ class TransactionRepositoryImpl(
     private val transactionDatabase: TransactionDatabase,
     private val userDatabase: UserDatabase
 ) : TransactionRepository {
+
+    private fun getEntityByDatabase(transaction: Transaction): TransactionEntity {
+        return TransactionEntity(
+            id = transaction.id,
+            description = transaction.description,
+            category = transaction.category,
+            date = transaction.date,
+            value = transaction.value,
+        )
+    }
+
     override fun createTransaction(id: UUID, input: CreateTransactionUseCaseInput): TransactionEntity {
 
         val user = userDatabase.findById(id).getOrElse {
@@ -34,30 +46,22 @@ class TransactionRepositoryImpl(
 
         transactionDatabase.save(newTransaction)
 
-        return TransactionEntity(
-            id = newTransaction.id,
-            description = newTransaction.description,
-            category = newTransaction.category,
-            date = newTransaction.date,
-            value = newTransaction.value
-        )
+        return getEntityByDatabase(newTransaction)
     }
 
     override fun getTransactionById(id: UUID): TransactionEntity {
-        TODO("Not yet implemented")
+        val transaction = transactionDatabase.findById(id).getOrElse {
+            throw NotFoundException()
+        }
+
+        return getEntityByDatabase(transaction)
     }
 
     override fun getTransactions(id: UUID): List<TransactionEntity> {
         val transactions = transactionDatabase.findByUserId(id)
 
         return transactions.map {
-            TransactionEntity(
-                id = it.id,
-                description = it.description,
-                date = it.date,
-                value = it.value,
-                category = it.category
-            )
+            getEntityByDatabase(it)
         }
     }
 
