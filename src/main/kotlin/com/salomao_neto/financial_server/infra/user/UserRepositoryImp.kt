@@ -7,13 +7,15 @@ import com.salomao_neto.financial_server.infra.user.database.User
 import com.salomao_neto.financial_server.infra.user.database.UserDatabase
 import org.springframework.stereotype.Component
 import java.util.*
+import kotlin.collections.ArrayList
 
 @Component
 class UserRepositoryImp(private val userDatabase: UserDatabase) : UserRepository {
 
     override fun registerUser(newUser: RegisterNewUserUseCaseInput): UserEntity {
 
-        val user = User(name = newUser.name, password = newUser.password, email = newUser.email)
+        val user =
+            User(name = newUser.name, email = newUser.email, password = newUser.password, transactions = ArrayList())
 
         userDatabase.save(user)
 
