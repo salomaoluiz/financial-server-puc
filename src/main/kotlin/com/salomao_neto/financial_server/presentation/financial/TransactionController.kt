@@ -19,7 +19,8 @@ class TransactionController(
     val getTransactionsUseCase: GetTransactionsUseCase,
     val createTransactionUseCase: CreateTransactionUseCase,
     val getTransactionByIdUseCase: GetTransactionByIdUseCase,
-    val editTransactionUseCase: EditTransactionUseCase
+    val editTransactionUseCase: EditTransactionUseCase,
+    val deleteTransactionByIdUseCase: DeleteTransactionByIdUseCase
 ) {
 
     @PostMapping
@@ -57,5 +58,10 @@ class TransactionController(
         )
 
         return editTransactionUseCase.run(useCaseInput)
+    }
+
+    @DeleteMapping("/{id}")
+    fun deleteTransaction(@PathVariable id: UUID): Boolean {
+        return deleteTransactionByIdUseCase.run(id)
     }
 }

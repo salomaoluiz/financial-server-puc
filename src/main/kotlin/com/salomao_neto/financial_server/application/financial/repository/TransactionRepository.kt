@@ -14,5 +14,5 @@ interface TransactionRepository {
 
     fun editTransaction(userId: UUID, input: EditTransactionUseCaseInput): TransactionEntity
 
-    fun deleteTransactionById(userId: UUID): Boolean
+    fun deleteTransactionById(userId: UUID, id: UUID): Boolean
 }
