@@ -6,13 +6,13 @@ import com.salomao_neto.financial_server.domain.financial.TransactionEntity
 import java.util.UUID
 
 interface TransactionRepository {
-    fun createTransaction(id: UUID, input: CreateTransactionUseCaseInput): TransactionEntity
+    fun createTransaction(userId: UUID, input: CreateTransactionUseCaseInput): TransactionEntity
 
     fun getTransactionById(id: UUID): TransactionEntity
 
-    fun getTransactions(id: UUID): List<TransactionEntity>
+    fun getTransactions(userId: UUID): List<TransactionEntity>
 
-    fun editTransaction(id: UUID, input: EditTransactionUseCaseInput): TransactionEntity
+    fun editTransaction(userId: UUID, input: EditTransactionUseCaseInput): TransactionEntity
 
-    fun deleteTransactionById(id: UUID): Boolean
+    fun deleteTransactionById(userId: UUID): Boolean
 }

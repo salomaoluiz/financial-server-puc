@@ -2,16 +2,13 @@ package com.salomao_neto.financial_server.presentation.financial
 
 import com.salomao_neto.financial_server.application.financial.use_case.*
 import com.salomao_neto.financial_server.application.financial.use_case.request.CreateTransactionUseCaseInput
+import com.salomao_neto.financial_server.application.financial.use_case.request.EditTransactionUseCaseInput
 import com.salomao_neto.financial_server.domain.financial.TransactionEntity
 import com.salomao_neto.financial_server.presentation.financial.request.CreateTransactionInput
+import com.salomao_neto.financial_server.presentation.financial.request.EditTransactionInput
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import jakarta.validation.Valid
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.util.UUID
 
 
@@ -21,7 +18,8 @@ import java.util.UUID
 class TransactionController(
     val getTransactionsUseCase: GetTransactionsUseCase,
     val createTransactionUseCase: CreateTransactionUseCase,
-    val getTransactionByIdUseCase: GetTransactionByIdUseCase
+    val getTransactionByIdUseCase: GetTransactionByIdUseCase,
+    val editTransactionUseCase: EditTransactionUseCase
 ) {
 
     @PostMapping
@@ -44,5 +42,20 @@ class TransactionController(
     @GetMapping("/{id}")
     fun getTransactionById(@PathVariable id: UUID): TransactionEntity {
         return getTransactionByIdUseCase.run(id);
+    }
+
+    @PutMapping
+    fun editTransaction(
+        @Valid @RequestBody input: EditTransactionInput
+    ): TransactionEntity {
+        val useCaseInput = EditTransactionUseCaseInput(
+            id = input.id,
+            description = input.description,
+            value = input.value,
+            date = input.date,
+            category = input.category
+        )
+
+        return editTransactionUseCase.run(useCaseInput)
     }
 }

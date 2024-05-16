@@ -29,9 +29,9 @@ class TransactionRepositoryImpl(
         )
     }
 
-    override fun createTransaction(id: UUID, input: CreateTransactionUseCaseInput): TransactionEntity {
+    override fun createTransaction(userId: UUID, input: CreateTransactionUseCaseInput): TransactionEntity {
 
-        val user = userDatabase.findById(id).getOrElse {
+        val user = userDatabase.findById(userId).getOrElse {
             throw Exception("User not found")
         }
 
@@ -57,19 +57,39 @@ class TransactionRepositoryImpl(
         return getEntityByDatabase(transaction)
     }
 
-    override fun getTransactions(id: UUID): List<TransactionEntity> {
-        val transactions = transactionDatabase.findByUserId(id)
+    override fun getTransactions(userId: UUID): List<TransactionEntity> {
+        val transactions = transactionDatabase.findByUserId(userId)
 
         return transactions.map {
             getEntityByDatabase(it)
         }
     }
 
-    override fun editTransaction(id: UUID, input: EditTransactionUseCaseInput): TransactionEntity {
-        TODO("Not yet implemented")
+    override fun editTransaction(userId: UUID, input: EditTransactionUseCaseInput): TransactionEntity {
+        val user = userDatabase.findById(userId).getOrElse {
+            throw NotFoundException()
+        }
+
+        val transaction = transactionDatabase.findById(input.id).getOrElse {
+            throw NotFoundException()
+        }.let {
+            if (user.id != it.user.id) {
+                throw IllegalAccessException()
+            }
+            it
+        }
+
+        transaction.category = input.category ?: transaction.category
+        transaction.value = input.value ?: transaction.value
+        transaction.description = input.description ?: transaction.description
+        transaction.date = input.date ?: transaction.date
+
+        transactionDatabase.save(transaction)
+
+        return getEntityByDatabase(transaction)
     }
 
-    override fun deleteTransactionById(id: UUID): Boolean {
+    override fun deleteTransactionById(userId: UUID): Boolean {
         TODO("Not yet implemented")
     }
 }
