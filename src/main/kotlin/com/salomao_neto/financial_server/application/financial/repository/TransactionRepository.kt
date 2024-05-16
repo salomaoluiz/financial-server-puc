@@ -8,7 +8,7 @@ import java.util.UUID
 interface TransactionRepository {
     fun createTransaction(userId: UUID, input: CreateTransactionUseCaseInput): TransactionEntity
 
-    fun getTransactionById(id: UUID): TransactionEntity
+    fun getTransactionById(userId: UUID, id: UUID): TransactionEntity
 
     fun getTransactions(userId: UUID): List<TransactionEntity>
 

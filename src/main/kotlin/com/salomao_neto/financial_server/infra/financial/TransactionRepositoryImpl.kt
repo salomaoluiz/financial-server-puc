@@ -19,6 +19,23 @@ class TransactionRepositoryImpl(
     private val userDatabase: UserDatabase
 ) : TransactionRepository {
 
+    private fun getTransactionByUserById(userId: UUID, transactionId: UUID): Transaction {
+        val user = userDatabase.findById(userId).getOrElse {
+            throw NotFoundException()
+        }
+
+        val transaction = transactionDatabase.findById(transactionId).getOrElse {
+            throw NotFoundException()
+        }.let {
+            if (user.id != it.user.id) {
+                throw IllegalAccessException()
+            }
+            it
+        }
+
+        return transaction
+    }
+
     private fun getEntityByDatabase(transaction: Transaction): TransactionEntity {
         return TransactionEntity(
             id = transaction.id,
@@ -49,10 +66,8 @@ class TransactionRepositoryImpl(
         return getEntityByDatabase(newTransaction)
     }
 
-    override fun getTransactionById(id: UUID): TransactionEntity {
-        val transaction = transactionDatabase.findById(id).getOrElse {
-            throw NotFoundException()
-        }
+    override fun getTransactionById(userId: UUID, id: UUID): TransactionEntity {
+        val transaction = getTransactionByUserById(userId, id)
 
         return getEntityByDatabase(transaction)
     }
@@ -66,18 +81,7 @@ class TransactionRepositoryImpl(
     }
 
     override fun editTransaction(userId: UUID, input: EditTransactionUseCaseInput): TransactionEntity {
-        val user = userDatabase.findById(userId).getOrElse {
-            throw NotFoundException()
-        }
-
-        val transaction = transactionDatabase.findById(input.id).getOrElse {
-            throw NotFoundException()
-        }.let {
-            if (user.id != it.user.id) {
-                throw IllegalAccessException()
-            }
-            it
-        }
+        val transaction = getTransactionByUserById(userId, input.id)
 
         transaction.category = input.category ?: transaction.category
         transaction.value = input.value ?: transaction.value
@@ -90,20 +94,7 @@ class TransactionRepositoryImpl(
     }
 
     override fun deleteTransactionById(userId: UUID, id: UUID): Boolean {
-        val user = userDatabase.findById(userId).getOrElse {
-            throw NotFoundException()
-        }
-
-
-        val transaction = transactionDatabase.findById(id).getOrElse {
-            throw NotFoundException()
-        }.let {
-            if (user.id != it.user.id) {
-                throw IllegalAccessException()
-            }
-
-            it
-        }
+        val transaction = getTransactionByUserById(userId, id)
 
         transactionDatabase.deleteById(transaction.id!!)
         return true
