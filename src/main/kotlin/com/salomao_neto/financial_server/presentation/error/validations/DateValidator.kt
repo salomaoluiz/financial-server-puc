@@ -12,7 +12,7 @@ import kotlin.reflect.KClass
 @Retention(AnnotationRetention.RUNTIME)
 @Constraint(validatedBy = [DateValidator::class])
 annotation class Date(
-    val message: String = "This date is invalid",
+    val message: String = "This date is invalid, should be like 2024-05-10T22:10:00Z",
     val groups: Array<KClass<Any>> = [],
     val payload: Array<KClass<Payload>> = []
 )
