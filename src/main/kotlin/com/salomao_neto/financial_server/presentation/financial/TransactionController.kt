@@ -46,7 +46,7 @@ class TransactionController(
             category = input?.category,
             startDate = input?.startDate,
             endDate = input?.endDate,
-            sortBy = if (input?.sortBy != null) SortBy.valueOf(input.sortBy) else null,
+            sortBy = if (input?.sortBy != null) SortBy.valueOf(input.sortBy.uppercase()) else null,
         )
         return getTransactionsUseCase.run(useCaseInput)
     }

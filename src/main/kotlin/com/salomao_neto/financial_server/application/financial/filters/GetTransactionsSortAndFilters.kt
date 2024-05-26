@@ -70,6 +70,12 @@ class GetTransactionsSortAndFilters(
         filteredTransactions = when (filters.sortBy) {
             SortBy.DATE_ASC -> filteredTransactions.sortedBy { parseDate(it.date) }
             SortBy.DATE_DESC -> filteredTransactions.sortedByDescending { parseDate(it.date) }
+            SortBy.CATEGORY_ASC -> filteredTransactions.sortedBy { it.category }
+            SortBy.CATEGORY_DESC -> filteredTransactions.sortedByDescending { it.category }
+            SortBy.DESCRIPTION_ASC -> filteredTransactions.sortedBy { it.description }
+            SortBy.DESCRIPTION_DESC -> filteredTransactions.sortedByDescending { it.description }
+            SortBy.VALUE_ASC -> filteredTransactions.sortedBy { it.value?.toDouble() }
+            SortBy.VALUE_DESC -> filteredTransactions.sortedByDescending { it.value?.toDouble() }
         }
 
         return this

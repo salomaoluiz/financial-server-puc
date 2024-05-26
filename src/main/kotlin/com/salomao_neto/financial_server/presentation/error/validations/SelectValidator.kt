@@ -34,7 +34,7 @@ class SelectValidator<T> : ConstraintValidator<Select, String> {
 
     override fun isValid(value: String?, context: ConstraintValidatorContext?): Boolean {
 
-        if ((value == null && !required) || enumValues.contains(value)) {
+        if ((value == null && !required) || enumValues.contains(value?.uppercase())) {
             return true
         }
 

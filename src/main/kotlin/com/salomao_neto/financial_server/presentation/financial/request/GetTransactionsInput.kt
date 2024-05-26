@@ -7,6 +7,12 @@ import org.springframework.web.bind.annotation.RequestParam
 enum class SortBy {
     DATE_DESC,
     DATE_ASC,
+    DESCRIPTION_DESC,
+    DESCRIPTION_ASC,
+    CATEGORY_DESC,
+    CATEGORY_ASC,
+    VALUE_DESC,
+    VALUE_ASC,
 }
 
 class GetTransactionsInput(
