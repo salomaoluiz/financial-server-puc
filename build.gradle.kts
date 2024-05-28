@@ -33,6 +33,9 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("io.mockk:mockk:1.13.11")
+    testImplementation("io.kotest:kotest-runner-junit5-jvm:5.9.0")
+    testImplementation("io.kotest:kotest-assertions-core-jvm:5.9.0")
 }
 
 tasks.withType<KotlinCompile> {
